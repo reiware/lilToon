@@ -136,6 +136,7 @@ namespace lilToon
                         EditorGUI.indentLevel--;
                     }
                     LocalizedProperty(invisible);
+                    LocalizedProperty(perspective);
                     LocalizedProperty(zwrite);
                     if(zwrite.floatValue != 1.0f && !isGem && lilEditorGUI.AutoFixHelpBox(GetLoc("sHelpZWrite")))
                     {

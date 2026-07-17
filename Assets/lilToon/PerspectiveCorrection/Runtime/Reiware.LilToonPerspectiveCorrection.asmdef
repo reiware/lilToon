@@ -1,0 +1,14 @@
+{
+  "name": "Reiware.LilToonPerspectiveCorrection",
+  "rootNamespace": "Reiware.LilToonPerspectiveCorrection",
+  "references": [],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

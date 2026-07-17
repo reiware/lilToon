@@ -19,6 +19,7 @@ namespace lilToon
         //------------------------------------------------------------------------------------------------------------------------------
         // Material properties
         private readonly lilMaterialProperty invisible              = new lilMaterialProperty("_Invisible", PropertyBlock.Base);
+        private readonly lilMaterialProperty perspective              = new lilMaterialProperty("_Perspective", PropertyBlock.Base);
         private readonly lilMaterialProperty cutoff                 = new lilMaterialProperty("_Cutoff", PropertyBlock.Base);
         private readonly lilMaterialProperty preColor               = new lilMaterialProperty("_PreColor", PropertyBlock.Base);
         private readonly lilMaterialProperty preOutType             = new lilMaterialProperty("_PreOutType", PropertyBlock.Base);
@@ -628,6 +629,7 @@ namespace lilToon
             return allProperty != null ? allProperty : allProperty = new[]
             {
                 invisible,
+                perspective,
                 cutoff,
                 preColor,
                 preOutType,

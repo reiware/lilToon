@@ -308,6 +308,7 @@ namespace lilToon
                         EditorGUILayout.BeginVertical(customBox);
                             LocalizedProperty(cull);
                             LocalizedProperty(invisible);
+                            LocalizedProperty(perspective);
                             LocalizedProperty(zwrite);
                             RenderQueueField();
                             lilEditorGUI.DrawLine();

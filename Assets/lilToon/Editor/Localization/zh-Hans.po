@@ -299,6 +299,9 @@ msgstr "基本设置"
 msgid "sInvisible"
 msgstr "不可见"
 
+msgid "sPerspective"
+msgstr "启用透视校正"
+
 msgid "sAsUnlit"
 msgstr "Unlit 化"
 

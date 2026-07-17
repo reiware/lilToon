@@ -48,6 +48,15 @@ void lilCustomVertexWS(inout appdata input, inout float2 uvMain, inout lilVertex
     #endif
 }
 
+float3 lilGetPerspectiveCameraPositionWS()
+{
+    #if defined(USING_STEREO_MATRICES)
+    return unity_StereoWorldSpaceCameraPos[unity_StereoEyeIndex];
+    #else
+    return _WorldSpaceCameraPos.xyz;
+    #endif
+}
+
 //------------------------------------------------------------------------------------------------------------------------------
 // Vertex shader
 LIL_V2F_TYPE vert(appdata input)
@@ -175,6 +184,65 @@ LIL_V2F_TYPE vert(appdata input)
     #if defined(LIL_CUSTOM_VERTEX_WS)
         LIL_RE_VERTEX_POSITION_INPUTS(vertexInput);
     #endif
+
+    //------------------------------------------------------------------------------------------------------------------------------
+    // Perspective Adjustment
+
+    float3 worldPos = vertexInput.positionWS;
+
+    float3 headPosWS = _HeadBonePositionWS.xyz;
+    float3 renderCameraPositionWS = lilGetPerspectiveCameraPositionWS();
+
+    float3 camPosWS = lerp(
+        renderCameraPositionWS,
+        _MainCameraPositionWS.xyz,
+        saturate(_UseCustomPerspectiveCamera)
+    );
+
+    float3 charUp = normalize((float3)UNITY_MATRIX_M._m01_m11_m21);
+
+    float vertH = dot(worldPos, charUp);
+    float headH = dot(headPosWS, charUp);
+
+    float h0 = headH - _PerspectiveRemovalStartHeight;
+    float h1 = headH + _PerspectiveRemovalEndHeight;
+
+    float headRegion = smoothstep(
+        h0,
+        max(h1, h0 + 1e-4),
+        vertH
+    );
+
+    float3 fromHead = worldPos - headPosWS;
+    float distanceFromHead = length(fromHead);
+
+    float radialMask = saturate(
+        1.0 - distanceFromHead / max(_PerspectiveRemovalRadius, 1e-4)
+    );
+
+    radialMask = smoothstep(0.0, 1.0, radialMask);
+
+    float strength =
+        saturate(_PerspectiveRemovalAmount) *
+        saturate(_Perspective) *
+        headRegion *
+        radialMask;
+
+    float3 cameraOffset = camPosWS - headPosWS;
+    float cameraDistance = max(length(cameraOffset), 1e-4);
+    float3 cameraDirection = cameraOffset / cameraDistance;
+
+    float depthOffset = dot(fromHead, cameraDirection);
+    float3 flattenedPos = worldPos - cameraDirection * depthOffset;
+
+    worldPos = lerp(worldPos, flattenedPos, strength);
+
+    vertexInput.positionWS = worldPos;
+    vertexInput.positionCS = mul(
+        UNITY_MATRIX_VP,
+        float4(worldPos, 1.0)
+    );
+
     float3 viewDirection = normalize(lilViewDirection(lilToAbsolutePositionWS(vertexInput.positionWS)));
     float3 headDirection = normalize(lilHeadDirection(lilToAbsolutePositionWS(vertexInput.positionWS)));
 

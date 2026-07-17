@@ -299,6 +299,9 @@ msgstr "기본 설정"
 msgid "sInvisible"
 msgstr "숨기기"
 
+msgid "sPerspective"
+msgstr "원근 보정 활성화"
+
 msgid "sAsUnlit"
 msgstr "Unlit 화"
 

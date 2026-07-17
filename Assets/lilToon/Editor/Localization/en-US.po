@@ -299,6 +299,9 @@ msgstr "Base Setting"
 msgid "sInvisible"
 msgstr "Invisible"
 
+msgid "sPerspective"
+msgstr "Enable Perspective Correction"
+
 msgid "sAsUnlit"
 msgstr "As Unlit"
 

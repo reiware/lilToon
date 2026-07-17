@@ -299,6 +299,9 @@ msgstr "基本設定"
 msgid "sInvisible"
 msgstr "非表示"
 
+msgid "sPerspective"
+msgstr "パース補正を有効化"
+
 msgid "sAsUnlit"
 msgstr "Unlit化"
 
