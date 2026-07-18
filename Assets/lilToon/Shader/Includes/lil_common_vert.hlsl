@@ -188,7 +188,8 @@ LIL_V2F_TYPE vert(appdata input)
     //------------------------------------------------------------------------------------------------------------------------------
     // Perspective Adjustment
 
-    float3 worldPos = vertexInput.positionWS;
+    float3 worldPosOriginal = vertexInput.positionWS;
+    float3 worldPos = lilToAbsolutePositionWS(worldPosOriginal);
 
     float3 headPosWS = _HeadBonePositionWS.xyz;
     float3 renderCameraPositionWS = lilGetPerspectiveCameraPositionWS();
@@ -235,7 +236,10 @@ LIL_V2F_TYPE vert(appdata input)
     float depthOffset = dot(fromHead, cameraDirection);
     float3 flattenedPos = worldPos - cameraDirection * depthOffset;
 
-    worldPos = lerp(worldPos, flattenedPos, strength);
+    float3 finalWorldPos = lerp(worldPos, flattenedPos, strength);
+    float3 displacement = finalWorldPos - worldPos;
+
+    worldPos = worldPosOriginal + displacement;
 
     vertexInput.positionWS = worldPos;
     vertexInput.positionCS = mul(
