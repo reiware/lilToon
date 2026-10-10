@@ -17,7 +17,16 @@ Shader "Hidden/lilToonCutoutOutline"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [Toggle] _UseCustomPerspectiveCamera ("Use Custom Perspective Camera", Float) = 0
+        _Perspective ("Perspective", Range(0,1)) = 1.0
+
+        _HeadBonePositionWS ("Head Bone Position (World Space)", Vector) = (0,0,0,0)
+        _MainCameraPositionWS ("Main Camera Position (World Space)", Vector) = (0,0,0,0)
+
+        _PerspectiveRemovalAmount ("Perspective Removal Amount", Range(0,1)) = 0
+        _PerspectiveRemovalRadius ("Perspective Removal Radius", Float) = 1.0
+        _PerspectiveRemovalStartHeight ("Perspective Removal Start Height", Float) = 0.0
+        _PerspectiveRemovalEndHeight ("Perspective Removal End Height", Float) = 1.0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -641,9 +650,11 @@ Shader "Hidden/lilToonCutoutOutline"
         Tags {"RenderType" = "TransparentCutout" "Queue" = "AlphaTest"}
         UsePass "Hidden/ltspass_cutout/FORWARD"
         UsePass "Hidden/ltspass_cutout/FORWARD_OUTLINE"
-        UsePass "Hidden/ltspass_cutout/FORWARD_ADD"
-        UsePass "Hidden/ltspass_cutout/FORWARD_ADD_OUTLINE"
-        UsePass "Hidden/ltspass_cutout/SHADOW_CASTER_OUTLINE"
+        UsePass "Hidden/ltspass_cutout/SHADOW_CASTER"
+        UsePass "Hidden/ltspass_cutout/DEPTHONLY"
+        UsePass "Hidden/ltspass_cutout/DEPTHNORMALS"
+        UsePass "Hidden/ltspass_cutout/MOTIONVECTORS"
+        UsePass "Hidden/ltspass_cutout/UNIVERSAL2D"
         UsePass "Hidden/ltspass_cutout/META"
         Pass
         {
@@ -716,8 +727,7 @@ Shader "Hidden/lilToonCutoutOutline"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

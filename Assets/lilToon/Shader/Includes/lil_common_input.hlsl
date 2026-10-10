@@ -100,18 +100,16 @@ SAMPLER(lil_sampler_linear_clamp);
 
 #ifndef LIL_INPUT_BASE_INCLUDED
 
+#if !defined(LIL_BRP)
+CBUFFER_START(UnityPerMaterial)
 float  _Perspective;
 float4 _HeadBonePositionWS;
 float4 _MainCameraPositionWS;
-
 float _UseCustomPerspectiveCamera;
 float _PerspectiveRemovalAmount;
 float _PerspectiveRemovalRadius;
 float _PerspectiveRemovalStartHeight;
 float _PerspectiveRemovalEndHeight;
-
-#if !defined(LIL_BRP)
-CBUFFER_START(UnityPerMaterial)
 #endif
 #if defined(LIL_LITE)
     float4  _LightDirectionOverride;

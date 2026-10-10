@@ -5,7 +5,7 @@ Shader "Hidden/lilToonLite"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -156,8 +156,11 @@ Shader "Hidden/lilToonLite"
     {
         Tags {"RenderType" = "Opaque" "Queue" = "Geometry"}
         UsePass "Hidden/ltspass_lite_opaque/FORWARD"
-        UsePass "Hidden/ltspass_lite_opaque/FORWARD_ADD"
         UsePass "Hidden/ltspass_lite_opaque/SHADOW_CASTER"
+        UsePass "Hidden/ltspass_lite_opaque/DEPTHONLY"
+        UsePass "Hidden/ltspass_lite_opaque/DEPTHNORMALS"
+        UsePass "Hidden/ltspass_lite_opaque/MOTIONVECTORS"
+        UsePass "Hidden/ltspass_lite_opaque/UNIVERSAL2D"
         UsePass "Hidden/ltspass_lite_opaque/META"
         Pass
         {
@@ -230,8 +233,7 @@ Shader "Hidden/lilToonLite"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

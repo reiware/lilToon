@@ -17,7 +17,7 @@ Shader "_lil/[Optional] lilToonOutlineOnly"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -640,7 +640,6 @@ Shader "_lil/[Optional] lilToonOutlineOnly"
     {
         Tags {"RenderType" = "Opaque" "Queue" = "Geometry"}
         UsePass "Hidden/ltspass_opaque/FORWARD_OUTLINE"
-        UsePass "Hidden/ltspass_opaque/FORWARD_ADD_OUTLINE"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -712,8 +711,7 @@ Shader "_lil/[Optional] lilToonOutlineOnly"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

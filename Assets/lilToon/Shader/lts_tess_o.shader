@@ -17,7 +17,7 @@ Shader "Hidden/lilToonTessellationOutline"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -641,9 +641,11 @@ Shader "Hidden/lilToonTessellationOutline"
         Tags {"RenderType" = "Opaque" "Queue" = "Geometry"}
         UsePass "Hidden/ltspass_tess_opaque/FORWARD"
         UsePass "Hidden/ltspass_tess_opaque/FORWARD_OUTLINE"
-        UsePass "Hidden/ltspass_tess_opaque/FORWARD_ADD"
-        UsePass "Hidden/ltspass_tess_opaque/FORWARD_ADD_OUTLINE"
-        UsePass "Hidden/ltspass_tess_opaque/SHADOW_CASTER_OUTLINE"
+        UsePass "Hidden/ltspass_tess_opaque/SHADOW_CASTER"
+        UsePass "Hidden/ltspass_tess_opaque/DEPTHONLY"
+        UsePass "Hidden/ltspass_tess_opaque/DEPTHNORMALS"
+        UsePass "Hidden/ltspass_tess_opaque/MOTIONVECTORS"
+        UsePass "Hidden/ltspass_tess_opaque/UNIVERSAL2D"
         UsePass "Hidden/ltspass_tess_opaque/META"
         Pass
         {
@@ -716,8 +718,7 @@ Shader "Hidden/lilToonTessellationOutline"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

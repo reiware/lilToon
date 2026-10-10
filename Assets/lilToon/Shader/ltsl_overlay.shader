@@ -5,7 +5,7 @@ Shader "_lil/[Optional] lilToonLiteOverlay"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -189,7 +189,6 @@ Shader "_lil/[Optional] lilToonLiteOverlay"
     {
         Tags {"RenderType" = "TransparentCutout" "Queue" = "AlphaTest+10"}
         UsePass "Hidden/ltspass_lite_transparent/FORWARD"
-        UsePass "Hidden/ltspass_lite_transparent/FORWARD_ADD"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -261,8 +260,7 @@ Shader "_lil/[Optional] lilToonLiteOverlay"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

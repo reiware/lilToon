@@ -17,7 +17,7 @@ Shader "_lil/[Optional] lilToonFurOnlyCutout"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -660,7 +660,6 @@ Shader "_lil/[Optional] lilToonFurOnlyCutout"
     {
         Tags {"RenderType" = "TransparentCutout" "Queue" = "AlphaTest"}
         UsePass "Hidden/lilToonFurCutout/FORWARD_FUR"
-        UsePass "Hidden/lilToonFurCutout/FORWARD_ADD_FUR"
         Pass
         {
             Tags { "LightMode" = "Never" }
@@ -732,8 +731,7 @@ Shader "_lil/[Optional] lilToonFurOnlyCutout"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-

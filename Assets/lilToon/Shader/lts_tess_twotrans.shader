@@ -17,7 +17,7 @@ Shader "Hidden/lilToonTessellationTwoPassTransparent"
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
-        [lilToggle]     _Perspective                ("sPerspective", Int) = 0
+        [lilToggle]     _Perspective                  ("sPerspective", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
                         _SubpassCutoff              ("sSubpassCutoff", Range(0,1)) = 0.5
@@ -674,8 +674,11 @@ Shader "Hidden/lilToonTessellationTwoPassTransparent"
         Tags {"RenderType" = "TransparentCutout" "Queue" = "AlphaTest+10"}
         UsePass "Hidden/ltspass_tess_transparent/FORWARD_BACK"
         UsePass "Hidden/ltspass_tess_transparent/FORWARD"
-        UsePass "Hidden/ltspass_tess_transparent/FORWARD_ADD"
         UsePass "Hidden/ltspass_tess_transparent/SHADOW_CASTER"
+        UsePass "Hidden/ltspass_tess_transparent/DEPTHONLY"
+        UsePass "Hidden/ltspass_tess_transparent/DEPTHNORMALS"
+        UsePass "Hidden/ltspass_tess_transparent/MOTIONVECTORS"
+        UsePass "Hidden/ltspass_tess_transparent/UNIVERSAL2D"
         UsePass "Hidden/ltspass_tess_transparent/META"
         Pass
         {
@@ -748,8 +751,7 @@ Shader "Hidden/lilToonTessellationTwoPassTransparent"
             ENDHLSL
         }
     }
-    Fallback "Unlit/Texture"
+    Fallback "Universal Render Pipeline/Unlit"
 
     CustomEditor "lilToon.lilToonInspector"
 }
-
